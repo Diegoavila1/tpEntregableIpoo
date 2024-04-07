@@ -76,9 +76,9 @@ class Viaje{
 
     public function __toString()
     {
-        $texto = "codigo del mismo destino:{$this->getCodigoMismoDestino()}"."\n";
-        $texto .= "destino: {$this->getDestino()}"."\n";
-        $texto .= "cantidad maxima pasajeros: {$this->getCantidadMaximaPasajeros()}"."\n";
+        $texto = "destino: {$this->getDestino()}"."\n";
+        $texto .="codigo del mismo destino:{$this->getCodigoMismoDestino()}"."\n";
+        $texto .= "cantidad de pasajeros: {$this->getCantidadMaximaPasajeros()}"."\n";
         $texto .= "los pasajeros son :\n {$this->mostrarObjPasajero()}"."\n";
         $texto .= "responsable de realizar el viaje: {$this->getObjResponsable()}"."\n";
         return $texto ;

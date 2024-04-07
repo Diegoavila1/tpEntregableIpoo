@@ -26,9 +26,9 @@ function menuPrincipal()
 function opcionesInternas()
 {
     $opciones = [
-        1 => "cargar pasajero:",
-        2 => "cargar 1 responsable:",
-        3 => "cargar el viaje:"
+        1 => "cargar los datos del pasajero:",
+        2 => "cargar 1 responsable del viaje:",
+        3 => "cargar los datos del viaje:"
 
     ];
 
@@ -68,7 +68,7 @@ switch ($menu) {
             if ($opcion == 1) {
 
                 echo "informacion pasajero :" . "\n";
-                echo "-----------------------------------------";
+                echo "-----------------------------------------". "\n";
                 echo "ingrese el nombre:";
                 $nombre = trim(fgets(STDIN));
                 echo "ingrese el apellido:";
