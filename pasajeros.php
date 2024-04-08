@@ -55,10 +55,11 @@ class Pasajeros {
     
     public function __toString()
     { 
-        return "nombre: {$this->getNombre()}
-apellido:{$this->getApellido()}
-numero de documento:{$this->getNumeroDocumento()}
-telefono:{$this->getTelefono()}";
+        return 
+"Nombre: {$this->getNombre()}
+Apellido:{$this->getApellido()}
+Numero de documento:{$this->getNumeroDocumento()}
+Telefono:{$this->getTelefono()}";
         
     }
 }

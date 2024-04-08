@@ -35,8 +35,14 @@ function opcionesInternas()
     foreach ($opciones as $indice => $opcion) {
         $respuesta .=  $indice . " ) $opcion" . "\n";
     }
+    do{
+       echo $respuesta; 
+       $respuesta = trim(fgets(STDIN));
+    }while (!in_array($respuesta, array_keys($opciones)));
+
     return $respuesta;
 }
+
 
 
 
@@ -63,13 +69,9 @@ switch ($menu) {
 
         //repite hasta que ingrese opcion correcta
 
-        do{
-           //menu de las opciones internas 
-           $opcion = opcionesInternas();
-           echo $opcion;
-           $opcion = trim(fgets(STDIN));
+        //menu de las opciones internas, solo funciona con opciones correctas
+        $opcion = opcionesInternas();
 
-        }while($opcion != 1 && $opcion != 2 && $opcion != 3);
 
         //bucle de las opciones internas
         while ($opcion == 1 || $opcion == 2 || $opcion == 3 || $opcion == 4) {
@@ -102,8 +104,6 @@ switch ($menu) {
 
                 //menu
                 $opcion = opcionesInternas();
-                echo $opcion;
-                $opcion = trim(fgets(STDIN));
 
             }
 
@@ -129,26 +129,26 @@ switch ($menu) {
 
                     //menu
                     $opcion = opcionesInternas();
-                    echo $opcion;
-                    $opcion = trim(fgets(STDIN));
 
                 }else{
                     echo "no puede ingresar mas responsables";
                     echo "\n";
+
                     //menu
                     $opcion = opcionesInternas();
-                    echo $opcion;
-                    $opcion = trim(fgets(STDIN));
                 }
 
             }
 
             if($opcion == 3){
+                //chequea si hay un responsable cargado
 
                 if($restriccionResponsable > 0){
 
                     echo "-------------------------------------- \n";
-                    echo "los datos del viaje son :";
+                    echo "Los datos del viaje son :";
+                    echo "\n";
+                    echo "-------------------------------------- \n";
                     $viaje = new Viaje($CodigoDestino,$destino,$cantidadMaximaPasajeros,$arrayPasajero,$objResponsable); 
                     echo $viaje."\n";
 
@@ -186,38 +186,106 @@ switch ($menu) {
                             $telefonoMod = trim(fgets(STDIN));
     
                             $viaje->modificarArrayPasajeros($pasajeroPedidoModificar,$nombreMod,$apellidoMod,$numeroDocumentoMod,$telefonoMod);
-                            echo "cambios realizado \n";
+                            echo "Cambios realizado \n";
 
-                            echo "desea que le muestre los datos del viaje modificados?";
+                            echo "Desea que le muestre los datos del viaje modificados?";
                             $respuesta = trim(fgets(STDIN));
+
+                            if($respuesta == "si"){
+                                $viaje->modificarArrayPasajeros($pasajeroPedidoModificar,$nombreMod,$apellidoMod,$numeroDocumentoMod,$telefonoMod);
+                            }else{
+                                //menu
+                                $opcion = opcionesInternas();
+                            
+                            }
+
+
+                        }elseif($modificacionViaje == 2){
+                            echo "ingresar el numero de empleado:";
+                            $numResponsable = trim(fgets(STDIN));
+
+                            if($objResponsable->getNumeroLicencia() == $numResponsable){
+                                echo "ingrese los nuevos datos ";
+                                echo "numero de empleado : ";
+                                $numEmpleadoMod = trim(fgets(STDIN));
+                                echo "numero licencia:";
+                                $numLicenciaoMod = trim(fgets(STDIN));
+                                echo "nombre:";
+                                $nombreMod = trim(fgets(STDIN));
+                                echo "apellido:";
+                                $apellidoMod = trim(fgets(STDIN));
+
+                                //modificacion de valores
+                                $objResponsable->setNumeroEmpleado($numEmpleadoMod);
+                                $objResponsable->setNumeroLicencia($numLicenciaMod);
+                                $objResponsable->setNombre($nombreMod);
+                                $objResponsable->setApellido($apellidoMod);
+                                echo "Cambios realizado \n";
+
+                            }else{
+                                echo "El numero de empleado no coincide:";
+                            }
+
+                            echo "Desea que le muestre los datos del viaje modificados?";
+                            $respuesta = trim(fgets(STDIN));
+
                             if($respuesta == "si"){
                                 $viaje->modificarArrayPasajeros($pasajeroPedidoModificar,$nombreMod,$apellidoMod,$numeroDocumentoMod,$telefonoMod);
                             }else{
                                 $opcion = 0;
                             }
 
-
-                        }elseif($modificacionViaje == 2){
-
                         }elseif($modificacionViaje == 3){
-
+                            $salir = true;
+                            while($salir){
+                                echo "que cambios desea realizar:?
+                                1-Codigo del mismo destino :
+                                2-El destino :
+                                3-cantidad de pasajeros maxima :";
+                                $cambiosViaje = trim(fgets(STDIN));
+                                if($cambiosViaje == 1){
+                                    echo "ingrese el codigo nuevo que desea cambiar:";
+                                    $codigoMismoDestino = trim(fgets(STDIN));
+                                    echo "cambio realizado:"."\n";
+                                    echo $viaje;
+                                }elseif($cambiosViaje == 2){
+                                    echo "ingrese el nuevo destino:";
+                                    $destino = trim(fgets(STDIN));
+                                    echo "cambio realizado:"."\n";
+                                    echo $viaje;
+                                }elseif($cambiosViaje == 3){
+                                    echo "ingrese la nueva cantidad maxima de pasajeros:";
+                                    $cantidadMaximaPasajeros = trim(fgets(STDIN));
+                                    echo "cambio realizado:"."\n";
+                                    echo $viaje;
+                                }else{
+                                    $salir = false;
+                                }
+                            }
                         }
+                            
+                    }
 
+                }else{
+                    echo "desea volver al menu?";
+                    $pregunta = trim(fgets(STDIN));
+                    if($pregunta == "si"){
+                        //menu
+                        echo "\n";
+                        $opcion = opcionesInternas();
                     }else{
                         $opcion = 0;
                     }
-
                 }
 
-                else{
-                    echo "no se puede realizar el viaje aun \n";
-
-                    //menu
-                    $opcion = opcionesInternas();
-                    echo $opcion;
-                    $opcion = trim(fgets(STDIN));
-                }
             }
+
+            else{
+              echo "no se puede realizar el viaje aun \n";
+              //menu
+              $opcion = opcionesInternas();
+            }
+            
             if($opcion == 4){
 
                 if($restriccionResponsable > 0 ){
@@ -242,23 +310,27 @@ switch ($menu) {
                         $telefonoMod = trim(fgets(STDIN));
 
                         $viaje->modificarArrayPasajeros($pasajeroPedidoModificar,$nombreMod,$apellidoMod,$numeroDocumentoMod,$telefonoMod);
-                        echo "cambios realizao";
+                        echo "cambio realizado";
                     }
 
                 }else{
                     echo "No se puede modificar informacion que no existe";
                     $opcion = opcionesInternas();
-                    echo $opcion;
-                    $opcion = trim(fgets(STDIN));
                 }
 
             }
-        }
+
+        }// fin del while
         break;
+
     case 2 :
+
         echo "salio del menu";
         break;
+
     default:
+
         echo "salio del menu";
+
 }
 
