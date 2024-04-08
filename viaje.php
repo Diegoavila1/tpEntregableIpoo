@@ -64,6 +64,16 @@ class Viaje{
     public function setObjPasajero($objPasajero) {
         $this->objPasajero = $objPasajero;
     }
+    public function modificarArrayPasajeros($pasajeroPedidoModificar,$nombre,$apellido,$dni,$telefono){
+        foreach($this->getObjPasajero() as $pasajero){
+            if($pasajero->getNumeroDocumento() === $pasajeroPedidoModificar){
+                $pasajero->setNombre($nombre);
+                $pasajero->setApellido($apellido);
+                $pasajero->setNumeroDocumento($dni);
+                $pasajero->setTelefono($telefono);
+            } 
+        }
+    }
 
     public function mostrarObjPasajero() {
         $texto = "";
