@@ -1,19 +1,19 @@
 <?php
-include_once 'pasajeros.php';
+include_once 'pasajero.php';
 include_once 'Responsable.php';
 
 class Viaje{
     private $codigoMismoDestino;
     private $destino;
     private $cantidadMaximaPasajeros;
-    private $objPasajero;
+    private $objPasajeros;
     private $objResponsable;
 
     public function __construct($codigoMismoDestinoInput, $destinoInput, $cantidadMaximaPasajerosInput, $objPasajerosInput , $objResponsableInput) {
         $this->codigoMismoDestino = $codigoMismoDestinoInput;
         $this->destino = $destinoInput;
         $this->cantidadMaximaPasajeros = $cantidadMaximaPasajerosInput;
-        $this->objPasajero = $objPasajerosInput;
+        $this->objPasajeros = $objPasajerosInput;
         $this->objResponsable = $objResponsableInput;
     }
 
@@ -41,8 +41,8 @@ class Viaje{
     }
 
     // Método de acceso (getter) para arrayPasajero
-    public function getObjPasajero() {
-        return $this->objPasajero;
+    public function getObjPasajeros() {
+        return $this->objPasajeros;
     }
 
        // Método de modificación (setter) para codigoMismoDestino
@@ -61,18 +61,32 @@ class Viaje{
     }
 
     // Método de modificación (setter) para arrayPasajero
-    public function setObjPasajero($objPasajero) {
-        $this->objPasajero = $objPasajero;
+    public function setObjPasajeros($objPasajeros) {
+        $this->objPasajeros = $objPasajeros;
     }
-    public function modificarArrayPasajeros($pasajeroPedidoModificar,$nombre,$apellido,$dni,$telefono){
-        foreach($this->getObjPasajero() as $pasajero){
-            if($pasajero->getNumeroDocumento() === $pasajeroPedidoModificar){
-                $pasajero->setNombre($nombre);
-                $pasajero->setApellido($apellido);
-                $pasajero->setNumeroDocumento($dni);
-                $pasajero->setTelefono($telefono);
-            } 
+
+    public function encontrarPorDni($dni){
+        $i = 0;
+        $booleano = false;
+        $encontradoObj = -1;
+
+        while($i < count($this->getObjPasajeros()) && $booleano != true){
+            if($this->getObjPasajero()[$i] == $dni){
+                $encontradoObj = $i;
+            }
         }
+        return $encontradoObj;
+    }
+
+    public function modificarArrayPasajeros($nombre,$apellido,$dni,$telefono){
+
+        if( $this->getObjPasajeros()[$this->encontrarPorDni($dni)] != -1 ){
+            $this->getObjPasajeros()[$this->encontrarPorDni($dni)]->setNombre($nombre);
+            $this->getObjPasajeros()[$this->encontrarPorDni($dni)]->setApellido($apellido);
+            $this->getObjPasajeros()[$this->encontrarPorDni($dni)]->setNumeroDocumento($dni);
+            $this->getObjPasajeros()[$this->encontrarPorDni($dni)]->setTelefono($telefono);
+        } 
+        
     }
 
     public function mostrarObjPasajero() {
@@ -82,6 +96,31 @@ class Viaje{
         }
         return $texto;
   
+    }
+    public function encontrarPorNumeroLicencia($numeroEmpleado){
+        $encontrado = true;
+        if($this->getObjResponsable()->getNumeroEmpleado() == $numeroEmpleado){ 
+            $encontrado = false;
+        }
+        return $encontrado;
+    }
+    public function reemplazarResponsable($numeroEmpleado,$numeroLicencia,$nombre,$apellido){
+
+        if($this->getObjResponsable()->encontrarPorNumeroLicencia($numeroEmpleado)){
+            $this->getObjResponsable()->setNumeroEmpleado($numeroEmpleado);
+            $this->getObjResponsable()->setNumeroLicencia($numeroLicencia);
+            $this->getObjResponsable()->setNombre($nombre);
+            $this->getObjResponsable()->setApellido($apellido);
+        }
+    }
+    public function reemplazarDatosViaje($codigoViajeMod,$destinoViajeMod,
+    $cantidadMaximaPasajerosMod){
+
+    if($codigoViajeMod == $this->getCodigoMismoDestino()){
+        $this->setCodigoMismoDestino($codigoViajeMod);
+        $this->setDestino($destinoViajeMod);
+        $this->setCantidadMaximaPasajeros($cantidadMaximaPasajerosMod);
+    }
     }
 
     public function __toString()
@@ -93,6 +132,7 @@ class Viaje{
         $texto .="Responsable de realizar el viaje: {$this->getObjResponsable()}"."\n";
         return $texto ;
     }
+
 }
 
 
