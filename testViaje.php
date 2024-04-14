@@ -4,15 +4,10 @@ include_once 'viaje.php';
 include_once 'pasajero.php';
 include_once 'Responsable.php';
 
-//precargamos un pasajero
-$objPasajero = new Pasajero("Diego", "Rios", "12000", "29961234");
-$objResponsable = new Responsable(10, 01, "barco", "valen");
-$arrayPasajero[] = $objPasajero;
-
 function opcionesInternas()
 {
-    do {
-        echo "
+
+    echo "
           |*************************************************************************|                                                                         
           |                        MENU                                             |
           |                        1 ) Cargar el viaje:                             |
@@ -22,12 +17,6 @@ function opcionesInternas()
           |                                                                         |
           |*************************************************************************|
           \n";
-
-        $respuesta = trim(fgets(STDIN));
-
-    } while ($respuesta != 1 && $respuesta != 2 && $respuesta != 3 && $respuesta != 4);
-
-    return $respuesta;
 }
 
 
@@ -35,10 +24,10 @@ function menuCargarDatos()
 {
     echo "
           |*************************************************************************|                                                                         
-          |                     -Cargar informacion del viaje:,                     |         
-          |                        1 ) Cargar Responsable:                          |
+          |                        Cargar informacion del viaje:                    |         
+          |                        1 ) Cargar Viaje:                                |
           |                        2 ) Cargar Pasajero:                             |
-          |                        3 ) Cargar Viaje:                                | 
+          |                        3 ) Cargar Responsable:                          | 
           |                        4 ) salir                                        |
           |                                                                         |
           |*************************************************************************|
@@ -51,8 +40,8 @@ function menuModificarDatos()
 {
     echo "
           |*************************************************************************|                                                                         
-          |                     -Modificar informacion del viaje:                   |         
-          |                        1 )Modificar Pasajeros :                         |
+          |                       Modificar informacion del viaje:                  |         
+          |                        1 ) Modificar Pasajeros :                        |
           |                        2 ) Modificar Responsable :                      |
           |                        3 ) Modificar viaje :                            |
           |                        4 ) salir                                        |
@@ -69,7 +58,7 @@ function menuVerDatos()
 {
     echo "
           |*************************************************************************|                                                                         
-          |                     -Modificar informacion del viaje:                   |         
+          |                        Ver informacion del viaje:                       |         
           |                        1 ) Ver datos del viaje :                        |
           |                        2 ) Ver datos del  Responsable :                 |
           |                        3 ) Ver datos del  Pasajeros :                   |
@@ -84,12 +73,29 @@ function menuVerDatos()
 }
 
 
+//precargamos un pasajero
+$objPasajero = new Pasajero("Diego", "Rios", "12000", "29961234");
+$objpasajero1 = new Pasajero("Juan", "Perez", 34567890, "30012345");
+$objpasajero2 = new Pasajero("Maria", "Lopez", 98765432, "30165432");
+$objpasajero3 = new Pasajero("Pedro", "Gutierrez", 12345678, "30223456");
+$objpasajero4 = new Pasajero("Ana", "Martinez", 45678901, "30387654");
+$objpasajero5 = new Pasajero("Carlos", "Garcia", 78901234, "30456789");
+
+$objResponsable = new Responsable(10, 01, "barco", "valen");
+
+$arrayPasajeros = array($objPasajero, $objpasajero1, $objpasajero2, $objpasajero3, $objpasajero4, $objpasajero5);
+
+
+
+// no anda las modficaciones del pasajero
+
 
 
 //menu
 do {
 
     $opcionesInternas = opcionesInternas();
+    $opcionesInternas = trim(fgets(STDIN));
 
     if ($opcionesInternas == 1) {
         //menu de carga de datos
@@ -99,16 +105,19 @@ do {
 
             if ($menuCargarDatos == 1) {
 
-                echo "Ingrese el numero de licencia :";
-                $numeroLicenciaResponsable = trim(fgets(STDIN));
-                echo "Ingrese el numero del responsable:";
-                $numeroEmpleadoResponsable = trim(fgets(STDIN));
-                echo "Ingrese el numero de documento del pasajero:";
-                $apellidoResponsable = trim(fgets(STDIN));
+                echo "Ingrese el codigo del viaje:";
+                $codigoViaje = trim(fgets(STDIN));
+                echo "Ingrese el destino:";
+                $destinoViaje = trim(fgets(STDIN));
+                echo "Ingrese la cantidad maxima de pasajeros:";
+                $cantidadMaximaPasajeros = trim(fgets(STDIN));
 
-                $objResponsable = new Responsable($numeroEmpleadoResponsable, $numeroLicenciaResponsable, $numeroEmpleadoResponsable, $apellidoResponsable);
+
+                $objViaje = new Viaje($codigoViaje, $destinoViaje, $cantidadMaximaPasajeros, $arrayPasajeros, $objResponsable);
+                
 
                 $menuCargarDatos = menuCargarDatos();
+
             } elseif ($menuCargarDatos == 2) {
                 echo "Ingrese el nombre del pasajero:";
                 $nombrePasajero = trim(fgets(STDIN));
@@ -120,18 +129,28 @@ do {
                 $telefonoPasajero = trim(fgets(STDIN));
 
                 $objPasajero = new Pasajero($nombrePasajero, $apellidoPasajero, $numeroDocumentoPasajero, $telefonoPasajero);
+                array_push($arrayPasajeros, $objPasajero);
+                $objViaje->setColObjPasajeros($arrayPasajeros);
 
                 $menuCargarDatos = menuCargarDatos();
+
             } elseif ($menuCargarDatos == 3) {
-                echo "Ingrese el codigo del viaje:";
-                $codigoViaje = trim(fgets(STDIN));
-                echo "Ingrese el destino:";
-                $destinoViaje = trim(fgets(STDIN));
-                echo "Ingrese la cantidad maxima de pasajeros:";
-                $cantidadMaximaPasajeros = trim(fgets(STDIN));
 
+                echo "Ingrese el numero de licencia :";
+                $numeroLicenciaResponsable = trim(fgets(STDIN));
+                echo "Ingrese el numero del responsable:";
+                $numeroEmpleadoResponsable = trim(fgets(STDIN));
+                echo "Ingrese el nombre del responsable:";
+                $nombreResponsable = trim(fgets(STDIN));
+                echo "Ingrese el apellido del responsable:";
+                $apellidoResponsable = trim(fgets(STDIN));
 
-                $objViaje = new Viaje($codigoViaje, $destinoViaje, $cantidadMaximaPasajeros, $objPasajero, $objResponsable);
+                $objResponsable = new Responsable($numeroEmpleadoResponsable, $numeroLicenciaResponsable, $nombreResponsable, $apellidoResponsable);
+                $objViaje->setObjResponsable($objResponsable);
+                echo "se realizo el cambio :";
+
+                $menuCargarDatos = menuCargarDatos();
+
             }
         } // fin del while
 
@@ -143,11 +162,11 @@ do {
 
             if ($menuModificarDatos == 1) {
 
-                $menuModificarDatos = menuModificarDatos();
                 echo "ingrese el dni del pasajero a modificar:";
                 $dniChequeable = trim(fgets(STDIN));
 
-                if ($objViaje->encontrarPorDni($dniChequeable)) {
+                if ($objViaje->encontrarPorDni($dniChequeable) >= 0) {
+
                     echo "Ingrese el nuevo nombre del pasajero:";
                     $nombrePasajeroMod = trim(fgets(STDIN));
                     echo "Ingrese el nuevo apellido del pasajero:";
@@ -159,28 +178,35 @@ do {
 
                     $objViaje->modificarArrayPasajeros($nombrePasajeroMod, $apellidoPasajeroMod, $numeroDocumentoPasajeroMod, $telefonoPasajeroMod);
                     $menuModificarDatos = menuModificarDatos();
+
                 } else {
+
                     echo "no se pudo encontrar al pasajero para modificar:";
                     $menuModificarDatos = menuModificarDatos();
                 }
+
             } elseif ($menuModificarDatos == 2) {
 
                 echo "ingrese el numero de empleado a chequear:";
                 $numeroEmpleadoChequear = trim(fgets(STDIN));
 
-                if ($objViaje->getObjResponsable()->encontrarPorNumeroLicencia($numeroEmpleadoChequear)) {
+                if ($objViaje->encontrarPorNumeroLicencia($numeroEmpleadoChequear)) {
                     echo "Ingrese el numero de licencia a modificar:";
                     $numeroLicenciaResponsableMod = trim(fgets(STDIN));
-                    echo "Ingrese el numero del responsable a modificar";
+                    echo "Ingrese el numero del responsable a modificar:";
                     $numeroResponsableMod = trim(fgets(STDIN));
                     echo "Ingrese el numero de documento del responsable a modificar:";
                     $apellidoResponsableMod = trim(fgets(STDIN));
                     echo "ingrese el nombre del responsable a modificar:";
                     $nombreResponsableMod = trim(fgets(STDIN));
                     $objViaje->reemplazarResponsable($numeroResponsableMod, $numeroLicenciaResponsableMod, $nombreResponsableMod, $apellidoResponsableMod);
+                    $menuModificarDatos = menuModificarDatos();
+                } else {
+                    echo "no se pudo encontrar el responsable para modificar:";
+                    $menuModificarDatos = menuModificarDatos();
                 }
 
-                $menuModificarDatos = menuModificarDatos();
+
             } elseif ($menuModificarDatos == 3) {
 
                 echo "Ingrese el codigo del viaje:";
@@ -189,7 +215,9 @@ do {
                 $destinoViajeMod = trim(fgets(STDIN));
                 echo "Ingrese la cantidad maxima de pasajeros:";
                 $cantidadMaximaPasajerosMod = trim(fgets(STDIN));
-                $objviaje->reemplazarDatosViaje($codigoViajeMod, $destinoViajeMod, $cantidadMaximaPasajerosMod);
+
+                $objViaje->reemplazarDatosViaje($codigoViajeMod, $destinoViajeMod, $cantidadMaximaPasajerosMod);
+                $menuModificarDatos = menuModificarDatos();
             }
         }
     } elseif ($opcionesInternas == 3) {
@@ -199,16 +227,21 @@ do {
         while ($menuVerDatos == 1 || $menuVerDatos == 2 || $menuVerDatos == 3) {
 
             if ($menuVerDatos == 1) {
+
                 echo $objViaje;
+
                 $menuVerDatos = menuVerDatos();
             } elseif ($menuVerDatos == 2) {
 
+                echo $objResponsable;
+
                 $menuVerDatos = menuVerDatos();
             } elseif ($menuVerDatos == 3) {
+
+                echo $objViaje->mostrarObjPasajero();
 
                 $menuVerDatos = menuVerDatos();
             }
         }
     }
-
-} while ($opcionesInternas);
+} while ($opcionesInternas != 4);
