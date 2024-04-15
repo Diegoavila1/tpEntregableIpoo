@@ -72,7 +72,10 @@ class Viaje{
         while($i < count($this->getColObjPasajeros()) && $encontradoObj != -1){
             if($dni === $this->getColObjPasajeros()[$i]->getNumeroDocumento()){
                 $encontradoObj = $i;
+            }else{
+                $i++;
             }
+
         }
 
         return $encontradoObj;
