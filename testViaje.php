@@ -75,7 +75,7 @@ function menuVerDatos()
 
 //precargamos un pasajero
 $objPasajero = new Pasajero("Diego", "Rios", "12000", "29961234");
-$objpasajero1 = new Pasajero("Juan", "Perez", 34567890, "30012345");
+$objpasajero1 = new Pasajero("Juan", "Perez", "34567890", "30012345");
 $objpasajero2 = new Pasajero("Maria", "Lopez", 98765432, "30165432");
 $objpasajero3 = new Pasajero("Pedro", "Gutierrez", 12345678, "30223456");
 $objpasajero4 = new Pasajero("Ana", "Martinez", 45678901, "30387654");
@@ -87,8 +87,9 @@ $arrayPasajeros = array($objPasajero, $objpasajero1, $objpasajero2, $objpasajero
 
 
 
-// no anda las modficaciones del pasajero
-
+//actualizar menu (salir/volver)
+//borrar base de datos precargada
+//
 
 
 //menu
@@ -171,12 +172,10 @@ do {
                     $nombrePasajeroMod = trim(fgets(STDIN));
                     echo "Ingrese el nuevo apellido del pasajero:";
                     $apellidoPasajeroMod = trim(fgets(STDIN));
-                    echo "Ingrese el nuevo numero de documento del pasajero:";
-                    $numeroDocumentoPasajeroMod = trim(fgets(STDIN));
                     echo "Ingrese el nuevo telefono del pasajero:";
                     $telefonoPasajeroMod = trim(fgets(STDIN));
-
-                    $objViaje->modificarArrayPasajeros($nombrePasajeroMod, $apellidoPasajeroMod, $numeroDocumentoPasajeroMod, $telefonoPasajeroMod);
+                    
+                    $objViaje->modificarArrayPasajeros($nombrePasajeroMod, $apellidoPasajeroMod, $objViaje->encontrarPorDni($dniChequeable), $telefonoPasajeroMod);
                     $menuModificarDatos = menuModificarDatos();
 
                 } else {

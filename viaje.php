@@ -69,9 +69,10 @@ class Viaje{
         $i = 0;
         $encontradoObj = -1;
 
-        while($i < count($this->getColObjPasajeros()) && $encontradoObj != -1){
-            if($dni === $this->getColObjPasajeros()[$i]->getNumeroDocumento()){
+        while($i < count($this->getColObjPasajeros()) && $encontradoObj == -1){
+            if($dni == $this->getColObjPasajeros()[$i]->getNumeroDocumento()){
                 $encontradoObj = $i;
+                echo $encontradoObj;
             }else{
                 $i++;
             }
@@ -83,12 +84,11 @@ class Viaje{
 
     public function modificarArrayPasajeros($nombre,$apellido,$dni,$telefono){
 
-            $this->getColObjPasajeros()[$this->encontrarPorDni($dni)]->setNombre($nombre);
-            $this->getColObjPasajeros()[$this->encontrarPorDni($dni)]->setApellido($apellido);
-            $this->getColObjPasajeros()[$this->encontrarPorDni($dni)]->setNumeroDocumento($dni);
-            $this->getColObjPasajeros()[$this->encontrarPorDni($dni)]->setTelefono($telefono);
-        
-        
+        $colObjPasajeros = $this->getColObjPasajeros();
+            $colObjPasajeros[$dni]->setNombre($nombre);
+            $colObjPasajeros[$dni]->setApellido($apellido);
+            $colObjPasajeros[$dni]->setTelefono($telefono);
+
     }
 
     public function mostrarObjPasajero() {
