@@ -25,7 +25,7 @@ function menuCargarDatos()
     echo "
           |*************************************************************************|                                                                         
           |                        Cargar informacion del viaje:                    |         
-          |                        1 ) Cargar Viaje:                                |
+          |                        1 ) Iniciar un Viaje:                            |
           |                        2 ) Cargar Pasajero:                             |
           |                        3 ) Cargar Responsable:                          | 
           |                        4 ) salir                                        |
@@ -59,9 +59,9 @@ function menuVerDatos()
     echo "
           |*************************************************************************|                                                                         
           |                        Ver informacion del viaje:                       |         
-          |                        1 ) Ver datos del viaje :                        |
-          |                        2 ) Ver datos del  Responsable :                 |
-          |                        3 ) Ver datos del  Pasajeros :                   |
+          |                        1 ) Ver informacion del viaje :                  |
+          |                        2 ) Ver informacion del  Responsable :           |
+          |                        3 ) Ver informacion del  Pasajeros :             |
           |                        4 ) salir                                        |
           |                                                                         |
           |                                                                         |
@@ -85,7 +85,7 @@ $objResponsable = new Responsable(10, 01, "barco", "valen");
 
 $arrayPasajeros = array($objPasajero, $objpasajero1, $objpasajero2, $objpasajero3, $objpasajero4, $objpasajero5);
 
-
+$contViaje = 0;
 
 //actualizar menu (salir/volver)
 //borrar base de datos precargada
@@ -113,9 +113,9 @@ do {
                 echo "Ingrese la cantidad maxima de pasajeros:";
                 $cantidadMaximaPasajeros = trim(fgets(STDIN));
 
-
-                $objViaje = new Viaje($codigoViaje, $destinoViaje, $cantidadMaximaPasajeros, $arrayPasajeros, $objResponsable);
                 
+                $objViaje = new Viaje($codigoViaje, $destinoViaje, $cantidadMaximaPasajeros, $arrayPasajeros, $objResponsable);
+                $contViaje++;
 
                 $menuCargarDatos = menuCargarDatos();
 
@@ -227,7 +227,12 @@ do {
 
             if ($menuVerDatos == 1) {
 
-                echo $objViaje;
+                if($contViaje == 0){
+                    echo "El viaje no se pude realizar , ya que no cargo uno ";
+                }else{
+                    echo $objViaje;
+                }
+                
 
                 $menuVerDatos = menuVerDatos();
             } elseif ($menuVerDatos == 2) {
