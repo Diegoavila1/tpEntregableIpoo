@@ -1,16 +1,14 @@
 <?php
 
-class Responsable{
+class Responsable extends Persona{
+    
     private $numeroEmpleado;
     private $numeroLicencia;
-    private $nombre;
-    private $apellido;
 
-    public function __construct($numeroEmpleadoInput, $numeroLicenciaInput, $nombreInput, $apellidoInput) {
+    public function __construct($nombre,$apellido,$numeroEmpleadoInput, $numeroLicenciaInput) {
+        parent::__construct($nombre, $apellido);
         $this->numeroEmpleado = $numeroEmpleadoInput;
         $this->numeroLicencia = $numeroLicenciaInput;
-        $this->nombre = $nombreInput;
-        $this->apellido = $apellidoInput;
     }
 
     // Método getter para numeroEmpleado
@@ -33,26 +31,6 @@ class Responsable{
         $this->numeroLicencia = $numeroLicencia;
     }
 
-    // Método getter para nombre
-    public function getNombre() {
-        return $this->nombre;
-    }
-
-    // Método setter para nombre
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
-    }
-
-    // Método getter para apellido
-    public function getApellido() {
-        return $this->apellido;
-    }
-
-    // Método setter para apellido
-    public function setApellido($apellido) {
-        $this->apellido = $apellido;
-    }
-    
     public function __toString()
     {
         return "numero empleado : {$this->getNumeroEmpleado()}

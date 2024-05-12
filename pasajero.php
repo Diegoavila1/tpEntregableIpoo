@@ -1,38 +1,18 @@
 <?php 
 
-class Pasajero {
-    private $nombre;
-    private $apellido;
+class Pasajero extends Persona{
+
     private $numeroDocumento;
     private $telefono;
+    private $nroAsiento;
+    private $nroTicket;
 
-    public function __construct($nombreInput, $apellidoInput, $numeroDocumentoInput, $telefonoInput) {
-        $this->nombre = $nombreInput;
-        $this->apellido = $apellidoInput;
+    public function __construct($nombre, $apellido, $numeroDocumentoInput, $telefonoInput,$nroAsiento,$nroTicket) {
+        parent::__construct($nombre, $apellido,$nroAsiento);
         $this->numeroDocumento = $numeroDocumentoInput;
         $this->telefono = $telefonoInput;
+        $this->nroTicket = $nroTicket;
     }
-
-    // Método getter para nombre
-    public function getNombre() {
-        return $this->nombre;
-    }
-
-    // Método setter para nombre
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
-    }
-
-    // Método getter para apellido
-    public function getApellido() {
-        return $this->apellido;
-    }
-
-    // Método setter para apellido
-    public function setApellido($apellido) {
-        $this->apellido = $apellido;
-    }
-
     // Método getter para numeroDocumento
     public function getNumeroDocumento() {
         return $this->numeroDocumento;
@@ -52,14 +32,34 @@ class Pasajero {
     public function setTelefono($telefono) {
         $this->telefono = $telefono;
     }
-    
+
+    public function getNroAsiento() {
+		return $this->nroAsiento;
+	}
+
+	public function setNroAsiento($value) {
+		$this->nroAsiento = $value;
+	}
+
+	public function getNroTicket() {
+		return $this->nroTicket;
+	}
+
+	public function setNroTicket($value) {
+		$this->nroTicket = $value;
+	}
+
+    public function darPorcentajeIncremento(){
+        return 10;
+    }
+
     public function __toString()
     { 
-        return 
-"Nombre: {$this->getNombre()}
-Apellido:{$this->getApellido()}
-Numero de documento:{$this->getNumeroDocumento()}
-Telefono:{$this->getTelefono()}";
-        
+        $texto = parent::__toString();
+        $texto .= "numero de documento : {$this->getNumeroDocumento()}";
+        $texto .= "telefono : {$this->getTelefono()}";
+        return $texto ;
     }
+
+
 }
