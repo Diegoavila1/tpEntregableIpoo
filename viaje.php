@@ -259,7 +259,7 @@ class Viaje{
         foreach ($this->getColObjPasajeros() as $objPasajeros) {
             $i=0;
             for ($i=0;$i < count($objPasajeros);$i++) {
-                
+
                 foreach ($objPasajeros[$i] as $indice => $valor) {
                         $texto .= $objPasajeros[0];
                         $texto .= "$indice : $valor\n"; // Mostrar "Costo final" con formato especial
@@ -276,12 +276,12 @@ class Viaje{
 
     public function __toString()
     {
-        $texto = "Destino: {$this->getDestino()}"."\n";
-        $texto .="Codigo del mismo destino:{$this->getCodigoMismoDestino()}"."\n";
-        $texto .="Cantidad de pasajeros: {$this->getCantidadMaximaPasajeros()}"."\n";
-        $texto .="Los pasajeros son :\n {$this->mostrarObjPasajero()}"."\n";
-        $texto .="Responsable de realizar el viaje: {$this->getObjResponsable()}"."\n";
-        $texto .="El precio del viaje es de : {$this->getPrecioViaje()}"."\n";
+        $texto = "Destino: {$this->getDestino()}\n";
+        $texto .="Codigo del mismo destino:{$this->getCodigoMismoDestino()}\n";
+        $texto .="Cantidad de pasajeros: {$this->getCantidadMaximaPasajeros()}\n";
+        $texto .="Los pasajeros son :\n {$this->mostrarObjPasajero()}\n";
+        $texto .="Responsable de realizar el viaje: {$this->getObjResponsable()}\n";
+        $texto .="El precio del viaje es de : {$this->getPrecioViaje()}\n";
         return $texto;
     }
 
