@@ -27,8 +27,8 @@ class Persona{
 	}
     public function __toString()
     {
-        return "nombre : {$this->getNombre()}
-        apellido : {$this->getApellido()}";
-
+        $texto = "nombre : {$this->getNombre()}"."\n";
+        $texto .= "apellido : {$this->getApellido()}"."\n";
+		return $texto;
     }
 }

@@ -37,7 +37,8 @@ class PasajeroVip extends Pasajero{
     public function __toString()
     {
         $texto = parent::__toString();
-        $texto .= "numero Viajero frecuente : {$this->getNroViajeroFrecuente()}";
+        $texto .= "numero Viajero frecuente : {$this->getNroViajeroFrecuente()}"."\n";
+        return $texto;
     }
 
 

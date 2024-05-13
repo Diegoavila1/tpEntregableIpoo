@@ -51,9 +51,9 @@ class PasajeroNecesidadesEspeciales extends Pasajero{
     public function __toString()
     {
         $texto = parent::__toString();
-        $texto .= "silla de ruedas : {$this->getSillaRuedas()}";
-        $texto .= "asistencia : {$this->getAsistenciaParaEmbarque()}";
-        $texto .= "comidas especiales : {$this->getComidaEspecial()}";
+        $texto .= "silla de ruedas : {$this->getSillaRuedas()}"."\n";
+        $texto .= "asistencia : {$this->getAsistenciaParaEmbarque()}"."\n";
+        $texto .= "comidas especiales : {$this->getComidaEspecial()}"."\n";
         return $texto;
     }
 

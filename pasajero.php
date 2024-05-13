@@ -8,10 +8,11 @@ class Pasajero extends Persona{
     private $nroTicket;
 
     public function __construct($nombre, $apellido, $numeroDocumentoInput, $telefonoInput,$nroAsiento,$nroTicket) {
-        parent::__construct($nombre, $apellido,$nroAsiento);
+        parent::__construct($nombre, $apellido);
         $this->numeroDocumento = $numeroDocumentoInput;
         $this->telefono = $telefonoInput;
         $this->nroTicket = $nroTicket;
+        $this->nroAsiento = $nroAsiento;
     }
     // Método getter para numeroDocumento
     public function getNumeroDocumento() {
@@ -56,8 +57,9 @@ class Pasajero extends Persona{
     public function __toString()
     { 
         $texto = parent::__toString();
-        $texto .= "numero de documento : {$this->getNumeroDocumento()}";
-        $texto .= "telefono : {$this->getTelefono()}";
+        $texto .= "numero de documento : {$this->getNumeroDocumento()}"."\n";
+        $texto .= "telefono : {$this->getTelefono()}"."\n";
+        $texto .= "numero de asiento : {$this->getNroAsiento()}"."\n";
         return $texto ;
     }
 
