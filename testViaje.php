@@ -106,12 +106,17 @@ $objPasajero = new Pasajero("normal","normal","normal","normal","normal","normal
 $coleccionPasajeros = [];
 
 $objViaje = new Viaje("1","londres",100,$coleccionPasajeros,null,1000);
-$objViaje->venderPasaje($objPasajeroVip);
-$objViaje->venderPasaje($objPasajeroDiscapacitado);
-$objViaje->venderPasaje($objPasajero);
+//$objViaje->venderPasaje($objPasajeroVip);
+//$objViaje->venderPasaje($objPasajeroDiscapacitado);
+//$objViaje->venderPasaje($objPasajero);
+
+$objViaje->crearPasajero("diego", "rios", "nroDocumento", "telefono ", "1","1");
+$objViaje->crearPasajero("carlos", "rios", "nroDocumento", "telefono ", "1","1");
+$objViaje->crearPasajero("carlos", "rios", "nroDocumento", "telefono ", "2","2");
 
 print_r($objViaje->getColObjPasajeros());
-echo $objViaje->mostrarObjPasajero();
+//echo $objViaje->mostrarObjPasajero();
+
 */
 
 
@@ -123,10 +128,11 @@ $arrayPasajeros = [];
 //ponerle colorcito a la interfaz
 
 
+
 //menu
 $contViaje = 0;
 $pasajeroExiste = false;
-
+$cantPasajeros = 0;
 do {
     
     $opcionesInternas = opcionesInternas();
@@ -153,6 +159,7 @@ do {
                 echo "Ingrese el precio del viaje por pasajero :";
                 $precioViaje = trim(fgets(STDIN));
                 $objViaje = new Viaje($codigoViaje, $destinoViaje, $cantidadMaximaPasajeros, $arrayPasajeros, null, $precioViaje);
+                echo "\e[42mSus datos se guardaron correctamente !!.\e[0m"."\n";
 
                 menuCargarDatos();
                 $menuCargarDatos = trim(fgets(STDIN));
@@ -160,8 +167,14 @@ do {
 
                 //cargar pasajero
             } elseif ($menuCargarDatos == 2) {
+                    //controla la cantidad maxima de pasajeros que puede entrar
+                    $cantPasajeros++;
+
                 if ($contViaje != 0) {
+                    if($cantPasajeros <= $objViaje->getCantidadMaximaPasajeros()){
+                                            //controla que el pasajero exista
                     $pasajeroExiste = true;
+
                     echo "Ingrese el nombre del pasajero:";
                     $nombrePasajero = trim(fgets(STDIN));
                     echo "Ingrese el apellido del pasajero:";
@@ -198,21 +211,31 @@ do {
                         case 3:
                             echo "Ingrese su numero de viajero frecuente:";
                             $nroViajeroFrecuente = trim(fgets(STDIN));
-
+                            echo "Ingrese la cantidad de millas :";
+                            $nroMillas = trim(fgets(STDIN));
                             break;
                     }
                     if ($tipoPasajero == 1) {
                         echo "El precio de su pasaje es de : {$objViaje->crearPasajero($nombrePasajero,$apellidoPasajero,$numeroDocumentoPasajero,$telefonoPasajero,$nroAsiento,$nroTicket)}";
-                        print_r($objViaje->getColObjPasajeros());
+                        echo "\e[42mSus datos se guardaron correctamente !!.\e[0m"."\n";
+
+
                     } elseif ($tipoPasajero == 2) {
                         echo "El precio de su pasaje es de : {$objViaje->crearPasajeroNecesidadesEspeciales($nombrePasajero,$apellidoPasajero,$numeroDocumentoPasajero,$telefonoPasajero,$nroViajeroFrecuente,$sillaRuedas,$asistenciaParaEmbarque,$comidaEspecial,$nroAsiento,$nroTicket)}";
-                        print_r($objViaje->getColObjPasajeros());
+                        echo "\e[42mSus datos se guardaron correctamente !!.\e[0m"."\n";
+
+                        
                     } elseif ($tipoPasajero == 3) {
                         echo "El precio de su pasaje es de : {$objViaje->crearPasajeroVip($nombrePasajero,$apellidoPasajero,$numeroDocumentoPasajero,$telefonoPasajero,$nroViajeroFrecuente,$nroAsiento,$nroTicket,$nroMillas)}";
-                        print_r($objViaje->getColObjPasajeros());
+                        echo "\e[42mSus datos se guardaron correctamente !!.\e[0m"."\n";
+
                     }
+                    }else{
+                        echo "\e[41mDisculpe , nos hemos quedado sin espacio.\e[0m"."\n";
+                    }
+                //else de control de viaje
                 } else {
-                    echo "\e[31mNo se cargo un viaje previamente , porfavor volver al menu y seleccione un viaje.\e[0m"."\n";
+                    echo "\e[41mNo se cargo un viaje previamente , porfavor volver al menu y seleccione un viaje.\e[0m"."\n";
                 }
 
                 menuCargarDatos();
@@ -231,9 +254,9 @@ do {
                     echo "Ingrese el apellido del responsable:";
                     $apellidoResponsable = trim(fgets(STDIN));
     
-                    $objResponsable = new Responsable($numeroEmpleadoResponsable, $numeroLicenciaResponsable, $nombreResponsable, $apellidoResponsable);
+                    $objResponsable = new Responsable($nombreResponsable, $apellidoResponsable,$numeroEmpleadoResponsable, $numeroLicenciaResponsable);
                     $objViaje->crearResponsable($objResponsable);
-                    echo "se realizo el cambio correctamente :";
+                    echo "\e[42mSus datos se guardaron correctamente !!.\e[0m"."\n";
                 }else{
                     echo "\e[41mNo se cargo un viaje previamente , porfavor volver al menu y seleccione un viaje .\e[0m"."\n";
                 }
@@ -263,6 +286,7 @@ do {
                     $objAEncontrar = $objViaje->encontrarPorTicket($ticketAChequear);
     
                     if ($objAEncontrar instanceof PasajeroNecesidadesEspeciales) {
+
                         echo "\e[45mCAMBIAR INFORMACION : PASAJERO NECESIDADES ESPECIALES .\e[0m\n";
 
                         echo "Ingrese el nombre del pasajero a cambiar:";
@@ -297,7 +321,8 @@ do {
                         $nroAsientoModVip = trim(fgets(STDIN));
     
                         $objViaje->modificarPasajeroVip($nombreModVip,$apellidoModVip,$numeroDocumentoModVip,$telefonoModVip,$nroViajeroFrecuenteModVip,$nroAsientoModVip,$ticketAChequear);
-    
+                        echo "\e[42mSus cambios se efectuaron correctamente !!.\e[0m"."\n";
+
                     } elseif ($objAEncontrar instanceof Pasajero) {
     
                         echo "\e[45mCAMBIAR INFORMACION : PASAJERO .\e[0m\n";
@@ -312,8 +337,9 @@ do {
                         $telefonoPasajeroMod = trim(fgets(STDIN));
                         echo "Ingrese su numero de viajero frecuente a cambiar:";
                         $nroViajeroFrecuenteMod = trim(fgets(STDIN));
-    
                         $objViaje->modificarPasajero($nombrePasajeroMod, $apellidoPasajeroMod, $numeroDocumentoPasajeroMod, $telefonoPasajeroMod, $nroViajeroFrecuenteMod, $ticketAChequear);
+                        echo "\e[42mSus cambios se efectuaron correctamente !!.\e[0m"."\n";
+
                     } else {
                         echo "\e[41mEl ticket que ingreso no es esta registrado en la base de datos\e[0m"."\n";  
                     }
@@ -396,7 +422,6 @@ do {
                     echo $objResponsable;
                 } else {
                     echo "\e[41mEl viaje no se pude realizar , cargue uno previamente.\e[0m"."\n";
-                    
                 }
                 
 
@@ -408,12 +433,11 @@ do {
                     echo $objViaje->mostrarObjPasajero();
                 } else {
                     echo "\e[41mEl viaje no se pude realizar , cargue uno previamente.\e[0m"."\n";
-                    
                 }
                 
-
                 $menuVerDatos = menuVerDatos();
             }
         }
     }
 } while ($opcionesInternas != 4);
+

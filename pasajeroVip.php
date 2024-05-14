@@ -29,7 +29,7 @@ class PasajeroVip extends Pasajero{
     public function darPorcentajeIncremento(){
         $importe = 35;
         if($this->getCantidadMillasPasajero() > 300){
-            $importe += 30;
+            $importe = 30;
         }
         return $importe;
     }

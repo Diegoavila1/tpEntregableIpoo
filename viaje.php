@@ -107,23 +107,66 @@ class Viaje{
 
 
     public function crearPasajero($nombrePasajero, $apellidoPasajero, $numeroDocumentoPasajero, $telefonoPasajero, $nroAsiento,$nroTicket){
-        //creo un pasajero siempre y cuando no exista uno ya anteriormente
-        $objPasajero = new Pasajero($nombrePasajero, $apellidoPasajero, $numeroDocumentoPasajero, $telefonoPasajero, $nroAsiento, $nroTicket);
-        $importe = $this->venderPasaje($objPasajero);
+        
+        $loEncontro = false;
+        $importe = 0;
+        $i=0;
+        while($i < count($this->getColObjPasajeros()) && $loEncontro == false){
+            if($this->getColObjPasajeros()[$i][0]->getNroTicket() != $nroTicket){
+                $i++;
+            }else{
+                $loEncontro = true;
+            }
+        }
+        if(!$loEncontro){
+            $objPasajero = new Pasajero($nombrePasajero, $apellidoPasajero, $numeroDocumentoPasajero, $telefonoPasajero, $nroAsiento, $nroTicket);
+            $importe = $this->venderPasaje($objPasajero);
+        }
         return $importe;
+
     }
     public function crearPasajeroVip($nombrePasajero, $apellidoPasajero, $numeroDocumentoPasajero, $telefonoPasajero, $nroViajeroFrecuente, $nroAsiento,$nroTicket,$cantidadMillasPasajero){
-        //creo un pasajero siempre y cuando no exista uno ya anteriormente
-        $objPasajeroVip = new PasajeroVip($nombrePasajero, $apellidoPasajero, $numeroDocumentoPasajero, $telefonoPasajero, $nroViajeroFrecuente, $nroAsiento,$nroTicket,$cantidadMillasPasajero);
-        $importe = $this->venderPasaje($objPasajeroVip);
+        
+        $loEncontro = false;
+        $importe = 0;
+        $i=0;
+        while($i < count($this->getColObjPasajeros()) && $loEncontro == false){
+            if($this->getColObjPasajeros()[$i][0]->getNroTicket() != $nroTicket){
+                $i++;
+            }else{
+                $loEncontro = true;
+            }
+        }
+        if(!$loEncontro){
+            $objPasajeroVip = new PasajeroVip($nombrePasajero, $apellidoPasajero, $numeroDocumentoPasajero, $telefonoPasajero, $nroViajeroFrecuente, $nroAsiento,$nroTicket,$cantidadMillasPasajero);
+            $importe = $this->venderPasaje($objPasajeroVip);
+            
+        }
         return $importe;
+
     }
     public function crearPasajeroNecesidadesEspeciales($nombre, $apellido, $numeroDocumento, $telefono,$nroViajeroFrecuente,$sillaRuedas, $asistenciaParaEmbarque, $comidaEspecial,$nroAsiento,$nroTicket){
-        //creo un pasajero siempre y cuando no exista uno ya anteriormente
-        $objPasajeroEspecial = new PasajeroNecesidadesEspeciales($nombre,$apellido,$numeroDocumento,$telefono,$nroViajeroFrecuente,$sillaRuedas,$asistenciaParaEmbarque,$comidaEspecial,$nroAsiento,$nroTicket);
-        $importe = $this->venderPasaje($objPasajeroEspecial);
+        
+        $loEncontro = false;
+        $importe = 0;
+        $i=0;
+        while($i < count($this->getColObjPasajeros()) && $loEncontro == false){
+            if($this->getColObjPasajeros()[$i][0]->getNroTicket() != $nroTicket){
+                $i++;
+            }else{
+                $loEncontro = true;
+            }
+        }
+
+        if(!$loEncontro){
+            $objPasajeroEspecial = new PasajeroNecesidadesEspeciales($nombre,$apellido,$numeroDocumento,$telefono,$nroViajeroFrecuente,$sillaRuedas,$asistenciaParaEmbarque,$comidaEspecial,$nroAsiento,$nroTicket);
+            $importe = $this->venderPasaje($objPasajeroEspecial);
+            
+        }
         return $importe;
     }
+
+
     public function crearResponsable($objResponsable){
 
         $this->setObjResponsable($objResponsable);
@@ -132,7 +175,6 @@ class Viaje{
 
     
     public function encontrarPorTicket($ticketChequeoInterno){
-        print_r($this->getColObjPasajeros());
 
         $i=0;
         $posicionObjeto = null;
@@ -150,8 +192,6 @@ class Viaje{
     }
 
     public function modificarPasajero($nombre,$apellido,$numeroDocumento,$telefono,$nroViajeroFrecuente,$ticketChequeoInterno){
-
-        print_r($this->getColObjPasajeros());
 
         $i=0;
         $bandera = null;
@@ -173,8 +213,6 @@ class Viaje{
     }
 
     public function modificarPasajeroVip($nombre, $apellido, $numeroDocumento, $telefono,$nroViajeroFrecuente,$nroAsiento,$nroTicket){
-
-        print_r($this->getColObjPasajeros());
 
         $i=0;
         $bandera = null;
@@ -198,9 +236,6 @@ class Viaje{
     }
 
     public function modificarPasajeroNecesidadesEspeciales($nombre, $apellido, $numeroDocumento, $telefono,$nroViajeroFrecuente,$sillaRuedas, $asistenciaParaEmbarque, $comidaEspecial,$nroAsiento,$nroTicket){
-
-                
-        print_r($this->getColObjPasajeros());
 
         $i=0;
         $bandera = null;
@@ -262,7 +297,7 @@ class Viaje{
 
                 foreach ($objPasajeros[$i] as $indice => $valor) {
                         $texto .= $objPasajeros[0];
-                        $texto .= "$indice : $valor\n"; // Mostrar "Costo final" con formato especial
+                        $texto .= "$indice : $valor\n";
                 
                 }
                 $texto .= "\n";
@@ -270,7 +305,7 @@ class Viaje{
         }
     
         return $texto;
-        //$texto .= $objPasajeros[0];
+
     }
     
 
