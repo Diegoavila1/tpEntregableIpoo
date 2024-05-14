@@ -92,40 +92,8 @@ function menuTipoPasajero()
     return $respuesta;
 }
 
-//$arrayPasajeros = [];
-//$arrayPasajeros[] = $objpasajero;
-//$contViaje = 0;
-
-
-
-/*
-$objPasajeroVip = new PasajeroVip("nombre", "apellido", "numeroDocumentoInput", "telefonoInput","nroViajeroFrecuente","nroAsiento","nroTicket","cantidadMillasPasajero");
-$objPasajeroDiscapacitado = new PasajeroNecesidadesEspeciales("nombre", "apellido", "numeroDocumentoInput", "telefonoInput","nroViajeroFrecuente","sillaRuedas", "asistenciaParaEmbarque", "comidaEspecial","nroAsiento","nroTicket");
-$objPasajero = new Pasajero("normal","normal","normal","normal","normal","normal");
-
-$coleccionPasajeros = [];
-
-$objViaje = new Viaje("1","londres",100,$coleccionPasajeros,null,1000);
-//$objViaje->venderPasaje($objPasajeroVip);
-//$objViaje->venderPasaje($objPasajeroDiscapacitado);
-//$objViaje->venderPasaje($objPasajero);
-
-$objViaje->crearPasajero("diego", "rios", "nroDocumento", "telefono ", "1","1");
-$objViaje->crearPasajero("carlos", "rios", "nroDocumento", "telefono ", "1","1");
-$objViaje->crearPasajero("carlos", "rios", "nroDocumento", "telefono ", "2","2");
-
-print_r($objViaje->getColObjPasajeros());
-//echo $objViaje->mostrarObjPasajero();
-
-*/
-
 
 $arrayPasajeros = [];
-//pedir por terminal que me terminen de pasar los datos para ingresar los pasajeros
-//hacer las 2 funciones que te quedaron para que se pueda modificar un pasajero
-//controlar el tema de viajes que no existen 
-//ver el tema de como metes en el array multidimensional el responsable 
-//ponerle colorcito a la interfaz
 
 
 
@@ -172,7 +140,7 @@ do {
 
                 if ($contViaje != 0) {
                     if($cantPasajeros <= $objViaje->getCantidadMaximaPasajeros()){
-                                            //controla que el pasajero exista
+                    //controla que el pasajero exista
                     $pasajeroExiste = true;
 
                     echo "Ingrese el nombre del pasajero:";
